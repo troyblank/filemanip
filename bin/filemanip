@@ -1,0 +1,15 @@
+#! /usr/bin/env node
+
+var commands = {
+    convert: require('../commands/convert'),
+    meta: require('../commands/meta')
+}
+
+var command = process.argv[2];
+var action = process.argv[3];
+
+if(commands[command]) {
+    commands[command].run(action);
+} else {
+    console.log('filemanip! please specify a valid command.')
+}
