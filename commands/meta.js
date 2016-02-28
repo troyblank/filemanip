@@ -12,11 +12,21 @@ exports.run = function(action) {
     switch(action) {
         case 'randomplay':
             exports.randomPlayOrder();
+        case 'addtracknumbers':
+            exports.addTracknumbers();
     }
 }
 
 exports.randomPlayOrder = function() {
     exports.getRandomFiles(exports.addOrderToMetaAndName);
+}
+
+exports.addTracknumbers = function() {
+    exports.getFiles(exports.addTrackNumberMetadata);
+}
+
+exports.getFiles =  function(handler) {
+    fileUtil.getFilesInDir(handler);
 }
 
 exports.getRandomFiles =  function(handler) {
@@ -76,4 +86,34 @@ exports.addOrderToFileName = function(file, count, handler) {
             handler();
         }
     });
+}
+
+exports.addTrackNumberMetadata = function(files) {
+    var counter = 0,
+        audioCounter = 0,
+        data = {};
+
+
+    function next() {
+        if(counter < files.length) {
+            var targFile = files[counter];
+            counter++;
+
+            if(fileUtil.isAudio(targFile)) {
+                audioCounter++;
+                data.track = audioCounter;
+                ffmetadata.write(targFile, data, {'id3v2.3':true}, function(err) { 
+                    if (err) {
+                        console.error('ERROR: writing metadata ', err);
+                    } else {
+                        next();
+                    }
+                });
+            } else {
+                next();
+            }
+        }
+    }
+
+    next();
 }
