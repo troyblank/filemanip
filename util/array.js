@@ -6,12 +6,12 @@ exports.shuffle = function(array) {
     randomIndex;
 
     while (0 !== i) {
-      randomIndex = Math.floor(Math.random() * i);
-      i -= 1;
+        randomIndex = Math.floor(Math.random() * i);
+        i -= 1;
 
-      tempVal = array[i];
-      array[i] = array[randomIndex];
-      array[randomIndex] = tempVal;
+        tempVal = array[i];
+        array[i] = array[randomIndex];
+        array[randomIndex] = tempVal;
     }
 
     return array;

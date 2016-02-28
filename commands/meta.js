@@ -3,6 +3,7 @@
 const exec = require('child_process').exec;
 const arrayUtil = require('../util/array');
 const fileUtil = require('../util/file');
+const stringUtil = require('../util/string');
 const ffmetadata = require('ffmetadata');
 
 var dir = process.cwd();
@@ -54,7 +55,7 @@ exports.addOrderToMetaTitle = function(file, count, handler) {
         if (err) {
             console.error('ERROR: reading metadata ', err);
         } else if(data.title) {
-            newData.title = String(count) + '_' + data.title;
+            newData.title = stringUtil.addLeadingZeros(String(count), 2) + '_' + data.title;
         }
 
         ffmetadata.write(file, newData, {'id3v2.3':true}, function(err) { 
@@ -68,7 +69,7 @@ exports.addOrderToMetaTitle = function(file, count, handler) {
 }
 
 exports.addOrderToFileName = function(file, count, handler) {
-    fileUtil.rename(file, String(count) + '_' + file, function(err) {
+    fileUtil.rename(file, stringUtil.addLeadingZeros(String(count), 2) + '_' + file, function(err) {
         if (err) {
             console.log('ERROR: renaming file ' + err);
         } else {
