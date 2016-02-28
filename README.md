@@ -1,11 +1,16 @@
 # filemanip
-An npm CLI that allows file manipulation. A lot of commands require ffmpeg to be pre-installed.
+An NPM CLI that allows file manipulation. A lot of commands require ffmpeg to be pre-installed.
 
 This is a very random, quick n' dirty (no unit tests) list of commands that I use to help friends and family organize media files. Any other use would be plesant but not anticipated.
 
 ## Requirements
 * Node
 * ffmpeg
+
+## Installation
+To install simply run
+
+    npm install -g filemanip
 
 ## usage
 To use filmanip cd into a directory of files you want manipulated and run ```filemanip command``` where 'command' is one of the commands below.
