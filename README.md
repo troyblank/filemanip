@@ -17,5 +17,6 @@ To use filmanip cd into a directory of files you want manipulated and run ```fil
 
 ## Commands
 * convert mp3          -- converts files into mp3 files
+
 * meta randomplay      -- prepends `x_` in random order to filename and title, where 'x' is descending numbers
 * meta addtracknumbers -- adds track numbers to files

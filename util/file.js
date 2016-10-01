@@ -22,20 +22,26 @@ exports.deleteFiles = function(filenames, handler) {
     }
 }
 
-exports.getFilesInDir =  function(handler) {
-    var dir = process.cwd(),
+exports.getFilesInDir = function(recursive, subDir) {
+    var dir = subDir ? process.cwd() + '\/' + subDir : process.cwd(),
         fileNames = [];
 
-    fs.readdir(dir, function(err, files){
-        for (var i=0; i<files.length; i++) {
-            var file = files[i];
+    var files = fs.readdirSync(dir);
+    for (var i=0; i<files.length; i++) {
+        var file = subDir ? subDir + '\/' + files[i] : files[i];
 
-            if (fs.statSync(file).isFile()) {
-                fileNames.push(file);
+        if (fs.statSync(file).isFile()) {
+            fileNames.push(file);
+        }
+
+        if(recursive && fs.statSync(file).isDirectory()) {
+            if(file != '.git' && file != 'node_modules') {
+                fileNames = fileNames.concat(exports.getFilesInDir(recursive, file));
             }
         }
-        handler(fileNames);
-    });
+    }
+
+    return fileNames;
 }
 
 exports.isAudio = function(fileName) {
@@ -46,7 +52,11 @@ exports.removeExtension = function(fileName){
     var regex = /(.*?)\.[^.]*/,
         match = regex.exec(fileName);
 
-    return match[1];
+    if(match) {
+        return match[1];
+    }
+
+    return fileName;
 }
 
 exports.rename = function(origName, newName, handler) {
