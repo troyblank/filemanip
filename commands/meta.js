@@ -6,7 +6,7 @@ const fileUtil = require('../util/file');
 const stringUtil = require('../util/string');
 const ffmetadata = require('ffmetadata');
 
-var dir = process.cwd();
+var isRecursive;
 
 exports.run = function(action) {
     switch(action) {
@@ -18,21 +18,16 @@ exports.run = function(action) {
 }
 
 exports.randomPlayOrder = function() {
-    exports.getRandomFiles(exports.addOrderToMetaAndName);
+    exports.addOrderToMetaAndName(exports.getRandomFiles());
 }
 
 exports.addTracknumbers = function() {
-    exports.getFiles(exports.addTrackNumberMetadata);
+    exports.addTrackNumberMetadata(fileUtil.getFilesInDir());
 }
 
-exports.getFiles =  function(handler) {
-    fileUtil.getFilesInDir(handler);
-}
-
-exports.getRandomFiles =  function(handler) {
-    fileUtil.getFilesInDir(function(files){
-        handler(arrayUtil.shuffle(files));
-    });
+exports.getRandomFiles =  function() {
+    var files = fileUtil.getFilesInDir();
+    return arrayUtil.shuffle(files);
 }
 
 exports.addOrderToMetaAndName = function(files){

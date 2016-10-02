@@ -7,9 +7,10 @@ var commands = {
 
 var command = process.argv[2];
 var action = process.argv[3];
+var flag = process.argv[4];
 
 if(commands[command]) {
-    commands[command].run(action);
+    commands[command].run(action, flag);
 } else {
     console.log('filemanip! please specify a valid command.')
 }
