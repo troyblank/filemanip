@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-
+var help = require('../util/help');
 var commands = {
     convert: require('../commands/convert'),
     meta: require('../commands/meta')
@@ -9,7 +9,9 @@ var command = process.argv[2];
 var action = process.argv[3];
 var flag = process.argv[4];
 
-if(commands[command]) {
+if(command === '-h') {
+	help.showHelpText();
+} else if(commands[command]) {
     commands[command].run(action, flag);
 } else {
     console.log('filemanip! please specify a valid command.')

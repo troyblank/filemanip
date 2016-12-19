@@ -12,7 +12,7 @@ To install simply run
 
     npm install -g filemanip
 
-## usage
+## Usage
 To use filmanip cd into a directory of files you want manipulated and run ```filemanip command``` where 'command' is one of the commands below.
 
 ## Commands
@@ -20,3 +20,8 @@ To use filmanip cd into a directory of files you want manipulated and run ```fil
   * convert mp3 -r     -- converts files into mp3 files recursively using subfolders
 * meta randomplay      -- prepends `x_` in random order to filename and title, where 'x' is descending numbers
 * meta addtracknumbers -- adds track numbers to files
+
+## Help
+To get help in the CLI run
+    
+    filemanip -h
