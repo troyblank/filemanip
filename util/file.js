@@ -1,6 +1,4 @@
-'use strict';
-
-const fs = require('fs');
+const fs = require('fs-extra');
 
 exports.exists = function(filename) {
     if (fs.existsSync(filename)) {
@@ -20,6 +18,14 @@ exports.deleteFiles = function(filenames, handler) {
     for(var i = 0; i < filenames.length; i++) {
         exports.deleteFile(filenames[i]);
     }
+    handler.call();
+}
+
+exports.takeFilesOutOfDir = function(filenames, directory, handler) {
+    for(var i = 0; i < filenames.length; i++) {
+        fs.renameSync(directory + filenames[i], filenames[i])
+    }
+    handler.call();
 }
 
 exports.getFilesInDir = function(recursive, subDir) {
@@ -63,4 +69,18 @@ exports.rename = function(origName, newName, handler) {
     fs.rename(origName, newName, function(err) {
         handler(err);
     });
+}
+
+exports.makeFilePathDirectories = function(file) {
+    var filenameRegex = /[^\/]*$/;
+    var dir = file.replace(filenameRegex, '');
+
+    if (!fs.existsSync(dir)){
+        fs.mkdirsSync(dir);
+    }
+}
+
+exports.removeDirectory = function(dir) {
+    fs.emptyDirSync(dir);
+    fs.rmdirSync(dir);
 }
