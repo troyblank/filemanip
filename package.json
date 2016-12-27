@@ -12,6 +12,7 @@
         "filemanip": "bin/filemanip"
     },
     "dependencies": {
-        "ffmetadata": "^1.4.0"
+        "ffmetadata": "1.4.0",
+        "fs-extra": "1.0.0"
     }
 }

@@ -5,9 +5,23 @@ const fileUtil = require('../util/file');
 
 var isRecursive;
 var garbageBag = [];
+var convertedBag = [];
+var convertDir = './filemanip-converted/';
 
 exports.run = function(action, flag) {
     exports.convertFiles(fileUtil.getFilesInDir('-r' === flag));
+}
+
+exports.cleanHouse = function() {
+    fileUtil.deleteFiles(garbageBag, function() {
+        fileUtil.takeFilesOutOfDir(convertedBag, convertDir, function() {
+            fileUtil.removeDirectory(convertDir);
+            garbageBag = [];
+            convertedBag = [];
+            // inside joke with major client using tool :P
+            console.log('Karate chop! .... thank you.');
+        });
+    });
 }
 
 exports.convertFiles = function(files) {
@@ -24,11 +38,7 @@ exports.convertFiles = function(files) {
             counter++;
             exports.convertFile(targFile, convertAFile);
         } else {
-            // inside joke with major client using tool :P
-            fileUtil.deleteFiles(garbageBag, function() {
-                garbageBag = [];
-                console.log('Karate chop! .... thank you.');
-            });
+            exports.cleanHouse();
         }
     }
 
@@ -37,19 +47,19 @@ exports.convertFiles = function(files) {
 
 exports.convertFile = function(file, handler) {
     var toFile = fileUtil.removeExtension(file) + '.mp3',
-        command = 'ffmpeg -i "' + file + '" -acodec libmp3lame -ab 320k -id3v2_version 3 "' + toFile + '" -n';
+        command = 'ffmpeg -i "' + file + '" -acodec libmp3lame -ab 320k -id3v2_version 3 "' + convertDir + toFile + '" -n';
 
-    if(fileUtil.exists(toFile)) {
-        console.log(toFile + ' already exists; skipping.');
-        handler();
-    } else if(fileUtil.isAudio(file)) {
-       exec(command, function (error, stdout, stderr) {
+    if(fileUtil.isAudio(file)) {
+        fileUtil.makeFilePathDirectories(convertDir + toFile);
+
+        exec(command, function (error, stdout, stderr) {
             //console.log('stdout: ' + stdout);
 
             if (error !== null) {
                 console.log('exec error: ' + error);
             } else {
                 garbageBag.push(file);
+                convertedBag.push(toFile);
                 console.log('Converted ' + file + ' to ' + toFile + '.');
             }
 
