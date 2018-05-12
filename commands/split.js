@@ -12,10 +12,9 @@ exports.run = function(action, flag) {
 
 exports.cleanHouse = function() {
     fileUtil.deleteFiles(garbageBag, function() {
-            garbageBag = [];
-            // inside joke with major client using tool :P
-            console.log('Karate chop! .... thank you.');
-        //});
+        garbageBag = [];
+        // inside joke with major client using tool :P
+        console.log('Karate chop! .... thank you.');
     });
 }
 
@@ -28,7 +27,7 @@ exports.splitFiles = function(files) {
     console.log('0((“)(“)\n');
 
     function splitAFile() {
-        if(counter < files.length) {
+        if (counter < files.length) {
             var targFile = files[counter];
             counter++;
             exports.splitFile(targFile, splitAFile);

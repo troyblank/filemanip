@@ -3,6 +3,7 @@ var help = require('../util/help');
 var commands = {
     convert: require('../commands/convert'),
     split: require('../commands/split'),
+    combine: require('../commands/combine'),
     meta: require('../commands/meta')
 }
 
