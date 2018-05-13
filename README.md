@@ -19,6 +19,7 @@ To use filmanip cd into a directory of files you want manipulated and run ```fil
 * convert mp3          -- converts files into mp3 files
   * convert mp3 -r     -- converts files into mp3 files recursively using subfolders
 * split mp3            -- splits files into mp3 files into 30 min chunks
+* combine mp3          -- combines multipe mp3 files into one mp3 file
 * meta randomplay      -- prepends `x_` in random order to filename and title, where 'x' is descending numbers
 * meta addtracknumbers -- adds track numbers to files
 
