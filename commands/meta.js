@@ -60,10 +60,10 @@ exports.addOrderToMetaTitle = function(file, count, handler) {
         if (err) {
             console.error('ERROR: reading metadata ', err);
         } else if(data.title) {
-            newData.title = stringUtil.addLeadingZeros(String(count), 2) + '_' + data.title;
+            newData.title = stringUtil.addLeadingZeros(String(count), 3) + '_' + data.title;
         }
 
-        ffmetadata.write(file, newData, {'id3v2.3':true}, function(err) { 
+        ffmetadata.write(file, newData, {'id3v2.3':true}, function(err) {
             if (err) {
                 console.error('ERROR: writing metadata ', err);
             } else {
@@ -97,7 +97,7 @@ exports.addTrackNumberMetadata = function(files) {
             if(fileUtil.isAudio(targFile)) {
                 audioCounter++;
                 data.track = audioCounter;
-                ffmetadata.write(targFile, data, {'id3v2.3':true}, function(err) { 
+                ffmetadata.write(targFile, data, {'id3v2.3':true}, function(err) {
                     if (err) {
                         console.error('ERROR: writing metadata ', err);
                     } else {
