@@ -74,7 +74,7 @@ exports.addOrderToMetaTitle = function(file, count, handler) {
 }
 
 exports.addOrderToFileName = function(file, count, handler) {
-    fileUtil.rename(file, stringUtil.addLeadingZeros(String(count), 2) + '_' + file, function(err) {
+    fileUtil.rename(file, stringUtil.addLeadingZeros(String(count), 3) + '_' + file, function(err) {
         if (err) {
             console.log('ERROR: renaming file ' + err);
         } else {
