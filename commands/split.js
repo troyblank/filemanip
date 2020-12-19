@@ -6,7 +6,9 @@ const fileUtil = require('../util/file');
 var isRecursive;
 var garbageBag = [];
 
-exports.run = function(action, flag) {
+exports.run = function(action, otherParams) {
+    const flag = otherParams[0];
+
     exports.splitFiles(fileUtil.getFilesInDir('-r' === flag));
 }
 

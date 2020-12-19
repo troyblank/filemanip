@@ -1,24 +1,27 @@
 'use strict';
 
-const exec = require('child_process').exec;
 const arrayUtil = require('../util/array');
 const fileUtil = require('../util/file');
 const stringUtil = require('../util/string');
 const ffmetadata = require('ffmetadata');
 
+ // FFMPEG has errors if it has to write to a file twice in quick succession, delay smooths this out.
+const WRITE_DELAY = 5000;
 var isRecursive;
 
-exports.run = function(action) {
+exports.run = function(action, otherParams) {
+    const multiplier = Number(otherParams[0]) || 1
+
     switch(action) {
         case 'randomplay':
-            exports.randomPlayOrder();
+            exports.randomPlayOrder(multiplier);
         case 'addtracknumbers':
             exports.addTracknumbers();
     }
 }
 
-exports.randomPlayOrder = function() {
-    exports.addOrderToMetaAndName(exports.getRandomFiles());
+exports.randomPlayOrder = function(multiplier) {
+    exports.addOrderToMetaAndName(exports.getRandomFiles(), multiplier);
 }
 
 exports.addTracknumbers = function() {
@@ -30,20 +33,23 @@ exports.getRandomFiles =  function() {
     return arrayUtil.shuffle(files);
 }
 
-exports.addOrderToMetaAndName = function(files){
+exports.addOrderToMetaAndName = function(files, multiplier){
     var counter = 0,
         audioCounter = 0;
 
     function next() {
         if(counter < files.length) {
-            var targFile = files[counter];
+            var targetFile = files[counter];
             counter++;
 
-            if(fileUtil.isAudio(targFile)) {
+            if(fileUtil.isAudio(targetFile)) {
                 //appends 1_, 2_, 3_ .... to file title and file name
-                audioCounter++;
-                exports.addOrderToMetaTitle(targFile, audioCounter, function(){
-                    exports.addOrderToFileName(targFile, audioCounter, next);
+                audioCounter += multiplier;
+                exports.addOrderToMetaTitle(targetFile, audioCounter, function(){
+                    setTimeout(() => {
+                        exports.addOrderToFileName(targetFile, audioCounter, next);
+                    }, WRITE_DELAY)
+                    process.stdout.write('.');
                 });
             } else {
                 next();
@@ -91,13 +97,13 @@ exports.addTrackNumberMetadata = function(files) {
 
     function next() {
         if(counter < files.length) {
-            var targFile = files[counter];
+            var targetFile = files[counter];
             counter++;
 
-            if(fileUtil.isAudio(targFile)) {
+            if(fileUtil.isAudio(targetFile)) {
                 audioCounter++;
                 data.track = audioCounter;
-                ffmetadata.write(targFile, data, {'id3v2.3':true}, function(err) {
+                ffmetadata.write(targetFile, data, {'id3v2.3':true}, function(err) {
                     if (err) {
                         console.error('ERROR: writing metadata ', err);
                     } else {

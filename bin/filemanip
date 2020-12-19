@@ -2,19 +2,22 @@
 var help = require('../util/help');
 var commands = {
     convert: require('../commands/convert'),
+    copy: require('../commands/copy'),
     split: require('../commands/split'),
     combine: require('../commands/combine'),
     meta: require('../commands/meta')
 }
 
-var command = process.argv[2];
-var action = process.argv[3];
-var flag = process.argv[4];
+const { argv } = process;
+
+const command = argv[2];
+const action = argv[3];
+const otherParams = argv.slice(4, argv.length)
 
 if(command === '-h') {
 	help.showHelpText();
 } else if(commands[command]) {
-    commands[command].run(action, flag);
+    commands[command].run(action, otherParams);
 } else {
     console.log('filemanip! please specify a valid command.')
 }

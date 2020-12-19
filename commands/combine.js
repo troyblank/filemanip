@@ -3,7 +3,9 @@
 const exec = require('child_process').exec;
 const fileUtil = require('../util/file');
 
-exports.run = function(action, flag) {
+exports.run = function(action, otherParams) {
+    const flag = otherParams[0];
+
     exports.combineFiles(fileUtil.getFilesInDir('-r' === flag));
 }
 
