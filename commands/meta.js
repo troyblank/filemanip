@@ -15,8 +15,10 @@ exports.run = function(action, otherParams) {
     switch(action) {
         case 'randomplay':
             exports.randomPlayOrder(multiplier);
+            break;
         case 'addtracknumbers':
             exports.addTracknumbers();
+            break;
     }
 }
 
