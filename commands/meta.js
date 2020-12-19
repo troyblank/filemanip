@@ -12,11 +12,15 @@ var isRecursive;
 exports.run = function(action, otherParams) {
     const multiplier = Number(otherParams[0]) || 1
 
+    console.log(action)
+
     switch(action) {
         case 'randomplay':
             exports.randomPlayOrder(multiplier);
+            break;
         case 'addtracknumbers':
             exports.addTracknumbers();
+            break;
     }
 }
 
