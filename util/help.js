@@ -10,12 +10,16 @@ convert
         -r ( includes subfolders)
 split
     mp3 (splits files into mp3 files into 30 min chunks)
+copy
+    random (copies a number of files randomly with no repeating from a directory of your choice)
+        \${number}  how many files to copy
+        \${directory} the location of the files to copy from
 combine
     mp3 (combines multipe mp3 files into one mp3 file)
 meta
     addtracknumbers (adds track numbers to files)
-    randomplay (prepends 'x-' in random order to the filename and
-        title; where 'x' is descending numbers)
+    randomplay (prepends 'x-' in random order to the filename and title; where 'x' is descending numbers)
+        \${number}  how much the numbers increments by
 `
     );
 }

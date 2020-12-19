@@ -8,7 +8,9 @@ var garbageBag = [];
 var convertedBag = [];
 var convertDir = './filemanip-converted/';
 
-exports.run = function(action, flag) {
+exports.run = function(action, otherParams) {
+    const flag = otherParams[0];
+
     exports.convertFiles(fileUtil.getFilesInDir('-r' === flag));
 }
 

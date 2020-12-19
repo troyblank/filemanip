@@ -1,4 +1,9 @@
 const fs = require('fs-extra');
+const path = require('path');
+
+exports.getFileNameFromPath = (filename) => {
+    return path.parse(filename).base
+}
 
 exports.exists = function(filename) {
     if (fs.existsSync(filename)) {
@@ -19,6 +24,18 @@ exports.deleteFiles = function(filenames, handler) {
         exports.deleteFile(filenames[i]);
     }
     handler.call();
+}
+
+exports.copyFile = function(filename) {
+    const currentDir = process.cwd()
+
+    fs.copySync(filename, `${currentDir}/${exports.getFileNameFromPath(filename)}`)
+}
+
+exports.copyFiles = async (filenames) => {
+    filenames.forEach(async (filename) => {
+        await exports.copyFile(filename)
+    })
 }
 
 exports.takeFilesOutOfDir = function(filenames, directory, handler) {
