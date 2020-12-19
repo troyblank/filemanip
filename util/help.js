@@ -14,6 +14,7 @@ copy
     random (copies a number of files randomly with no repeating from a directory of your choice)
         \${number}  how many files to copy
         \${directory} the location of the files to copy from
+        -music only copies music
 combine
     mp3 (combines multipe mp3 files into one mp3 file)
 meta

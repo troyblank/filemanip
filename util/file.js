@@ -45,6 +45,25 @@ exports.takeFilesOutOfDir = function(filenames, directory, handler) {
     handler.call();
 }
 
+exports.getFilesInRemoteDir = function(recursive, directory) {
+        fileNames = [];
+
+    var files = fs.readdirSync(directory);
+    for (var i=0; i<files.length; i++) {
+        var file = directory ? directory + '\/' + files[i] : files[i];
+
+        if (fs.statSync(file).isFile()) {
+            fileNames.push(file);
+        }
+
+        if(recursive && fs.statSync(file).isDirectory()) {
+            fileNames = fileNames.concat(exports.getFilesInRemoteDir(recursive, file));
+        }
+    }
+
+    return fileNames;
+}
+
 exports.getFilesInDir = function(recursive, subDir) {
     var dir = subDir ? process.cwd() + '\/' + subDir : process.cwd(),
         fileNames = [];

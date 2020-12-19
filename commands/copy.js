@@ -22,8 +22,10 @@ exports.copyFiles = (numberToCopy, dirToCopyFrom, isMusicOnly) => {
 }
 
 exports.getRandomFiles = (numberToCopy, dirToCopyFrom, isMusicOnly) => {
-    const { getFilesInDir, isAudio } = fileUtil;
-    let randomListOfFiles = arrayUtil.shuffle(getFilesInDir(true, dirToCopyFrom))
+    const { getFilesInRemoteDir, isAudio } = fileUtil;
+    let randomListOfFiles = arrayUtil.shuffle(getFilesInRemoteDir(true, dirToCopyFrom))
+
+    console.log(randomListOfFiles)
 
     if ( isMusicOnly ) {
         randomListOfFiles = randomListOfFiles.filter((file) => isAudio(file))
