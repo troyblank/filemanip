@@ -25,7 +25,7 @@ To use filmanip cd into a directory of files you want manipulated and run ```fil
 * meta randomplay                   -- prepends `x_` in random order to filename and title, where 'x' is descending numbers
   * meta randomplay /x/             -- prepends `x_` in random order to filename and title, where 'x' is descending numbers and a passed `x` is how much the numbers increment by
 * meta addtracknumbers              -- adds track numbers to files
-* speed /speed/                     -- speeds up the files by the optional amount of `speed` (defaults is 1.3)
+* speed /speed/                     -- speeds up the files by the optional amount of `speed` (defaults is 1.2)
 
 ## Help
 To get help in the CLI run
