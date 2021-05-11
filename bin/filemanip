@@ -5,7 +5,8 @@ var commands = {
     copy: require('../commands/copy'),
     split: require('../commands/split'),
     combine: require('../commands/combine'),
-    meta: require('../commands/meta')
+    meta: require('../commands/meta'),
+    speed: require('../commands/speed')
 }
 
 const { argv } = process;

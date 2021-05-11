@@ -1,6 +1,6 @@
 {
     "name": "filemanip",
-    "version": "0.9.3",
+    "version": "0.10.0",
     "description": "A library of file manipulation commands.",
     "author": "Troy Blank",
     "license": "Pubic Domain",
