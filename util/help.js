@@ -21,7 +21,7 @@ meta
     addtracknumbers (adds track numbers to files)
     randomplay (prepends 'x-' in random order to the filename and title; where 'x' is descending numbers)
         \${number}  how much the numbers increments by
-speed (speeds up audio of a directory by 1.3)
+speed (speeds up audio of a directory by 1.2)
     \${speed} override 1.3 and set custom speed
 `
     );

@@ -16,7 +16,7 @@ exports.cleanHouse = function() {
     });
 }
 
-exports.run = function(speed = 1.3) {
+exports.run = function(speed = 1.2) {
     const files = fileUtil.getFilesInDir()
     let counter = 0
 
